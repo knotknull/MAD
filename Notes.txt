@@ -3,6 +3,100 @@ MAD: Microservices Architecture and Design
 
 Understanding core concepts, challenges and hybrid architectures
 
+REST
+
+gRPC / gRPC.io : RPC on top of protobuf  (10x over rest ??)
+
+
+Fallacies of Distributed Computing:
+  1. The Network Is Reliable
+  2. Latency is zero    (Tremote > Tlocal)
+  3. Bandwidth is infinite
+  4. Network is secure
+  5. Topology doesn't change
+  6. There is one administrator
+  7. Transport cost is zero
+  8. The network is homogeneous
+
+  Distributed Architecture:  contract creation, maintenance,
+                             versioning and coordination
+
+  Distributed logging facilities to provide a holistic view of a transaction
+
+
+                        ----------------
+                        |              |
+                        | client app   |
+                        |              |
+                        ----------------
+                      /
+                     /
+  ----------------  /      ---------------
+  |              |         |             |
+  | client app   |  -----> | client app  |
+  |              |         |             |
+  ----------------  \      ---------------
+                     \
+                      \
+                        ----------------
+                        |              |
+                        | client app   |
+                        |              |
+                        ----------------
+
+
+  Atomic transactions and transaction scope
+
+Microservice: fine-grained, single purpose service that does
+              one thing really well  (Single Purpose Service)
+
+devopsbookmarks.com
+
+Bounded Context:
+
+Business Model combined w/ code, rules and data is only that service's
+
+
+What is the right size for a Microservice ???
+  - purpose
+  - transactions
+  - coreography
+
+
+Shared Nothing Architecture
+  - each microservice has it's own db
+
+  API layer / endpoint proxy:
+    - apache
+    - HA Proxy
+    - NGinx
+    - Squid
+    - ZIProxy
+
+  API Gateway (integration hub):
+        - Apache Camel
+        - Mule ESB
+        - JBOSS
+
+
+    [load balancer]  <-> [gateway] <-> [proxy]
 
 
 
+service-based architecture:
+      - service granularity
+      - database scope
+      - deployment pipeline
+
+
+  migration patterns:
+        - identify logical components
+        - flatten and refactor components
+        - identify component dependencies
+              - component coupling analysis
+        - identify component groups (domains)
+        - identify domain dependencies
+        - create remote user interface
+          [UI]  <-> [API Facade] <-> [domain dependencies]
+        - migrate domains to "macro" services
+        - migrate "macro" services to mirco services
