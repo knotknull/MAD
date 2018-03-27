@@ -100,3 +100,125 @@ service-based architecture:
           [UI]  <-> [API Facade] <-> [domain dependencies]
         - migrate domains to "macro" services
         - migrate "macro" services to mirco services
+
+##################################################
+## service identification
+##################################################
+
+  - nginx as an API layer (with load balancing)
+  - kubernetes also works as this
+
+
+[function driven]  <-->  [data driven]  <-->   [request driven]
+
+
+  [ identify coarse-grained functional areas]
+                  |
+                  v
+  [ create coarse-grained microservices ]
+                  |
+                  v
+  [ map services to data tables ]
+                  |
+                  v
+  [ refine service granularity ]
+                  |
+                  v
+  [ create service dependencies ]
+                  |
+                  v
+  [ identify orchestration level ]
+
+
+
+
+##################################################
+## service identification
+##################################################
+
+Service cohesion:  weak coupling / strong cohesion
+
+
+ ----------------------
+|                      | --> add customer demographics
+|                      | --> update customer demographics
+|                      | --> get customer demographics
+|   Customer Service   | --> notify customer
+|                      | --> get customer comments
+|                      | --> remove customer demographics
+ ----------------------
+
+
+
+ ----------------------
+|  Customer            | --> add customer demographics
+|  demographics        | --> update customer demographics
+|                      | --> get customer demographics
+ ----------------------
+ ----------------------
+| Customer Notification | --> notify customer
+ ----------------------
+ ----------------------
+|  Customer            | --> get customer comments
+|  comments            | --> remove customer demographics
+ ----------------------
+
+
+
+
+##################################################
+## service design
+##################################################
+
+  - direct access design
+[api layer]  <->  [module]
+
+  - api access design
+[api layer]  <->  [api access facade]  <->  [module]
+
+  - domain-based api access design
+[ retrieve api ]  <->  [module]
+[  update api  ]  <->  [module]
+
+
+  - service-based api access design
+[api / access facade ]  <->  [module]
+
+
+api access design benefits:
+    - separation of concerns
+    - protocol-agnostic processing
+    - service context / binding
+    - service catalog
+
+
+##################################################
+## service communication
+##################################################
+
+service communication patterns
+    - REST
+    - messaging
+    - remote procedure call
+    - API gateway
+    - orchestrator pattern
+    - aggregator pattern
+    - gateway pattern
+    - service mesh
+
+
+NOTE: REST latency at each layer of api / facade
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
