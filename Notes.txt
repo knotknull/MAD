@@ -337,22 +337,123 @@ Service mesh
 ## distributed data (challenges)
 ##################################################
 
+Challenges:
+  - performance (latency)
+  - scalability
+  - testability
+  - deployability
+  - reliability
+  - availability
+
+
+
+
+----------------------------------------------------------------
+|                     api layer                                |
+----------------------------------------------------------------
+
+ -----------     -------------    -------------    -------------
+|           |   |             |  |             |  |             |
+|  service  |   |  service    |  |  service    |  |  service    |
+|  component|   |  component  |  |  component  |  |  component  |
+ -----------     -------------    -------------    -------------
+          \      /                          \       /
+           \    /                            \     /
+         -----------                       -----------
+         [  Data   ]                       [  Data   ]
+         [ Domain  ]                       [ Domain  ]
+         -----------                       -----------
+
+Create data taxonomy (classification)
+   - operational data
+   - transactional data
+   - reference data
+   - analytical data
+   - reporting data
+
+
+
+map information to business functions:
+                               ------------
+   positions             ---> |            |
+   alpha calculations    ---> |            |   -----> portfolio delta
+   benchmarks            ---> |  portfolio |
+   issuer streaming data ---> | rebalancing|   -----> risk analytics
+   time series analytics ---> |            |
+   restricted lists     --->  |            |   -----> trade lists
+                               ------------
+
+
+map information to physical database tables:
+
+
+    positions      ------>  [ [eod_positions] [curr_pos]    [prior_post] ]
+ issuer streaming data -->  [ [eod_positions] [curr_pos]    [prior_post] ]
+    restricted lists  --->  [ [fi_restrict]   [fx_restrict] [eq_restrict]]
 
 
 
 
 
+#############################################################
+## handling common data
+#############################################################
+
+
+
+
+----------------------------------------------------------------
+|                        api layer                             |
+----------------------------------------------------------------
+
+ -----------     -------------    -------------    -------------
+|           |   |             |  |             |  |             |
+|  service  |   |  service    |  |  service    |  |  service    |
+|  component|   |  component  |  |  component  |  |  component  |
+ -----------     -------------    -------------    -------------
+             \          /                    \       /
+               \       /                      \     /
+-------          -----------                 -----------
+[common] <-updt  [  Data   ]                 [  Data   ]
+[ data ]         [ Domain  ]                 [ Domain  ]
+-------          -----------                 -----------
+    |                 ^                           ^
+    |                 |                           |
+    v                 |                           |
+[---------------------------distributed cache---------------------------]
+
+
+
+#############################################################
+## distributed transactions
+#############################################################
+
+
+BASE:  basic availability, soft state, eventual consistency
+
+
+ ---      ---             ---      ---         ---      ---
+[   ] -> [   ]           [   ] -> [   ]       [   ] -> [   ]
+ ---      ---             ---      ---         ---      ---
+background  async       request based          event based
 
 
 
 
 
-
-
-
-
-
-
+---------          ---------          ---------
+|service|          |service|          |service|
+| data  |          | data  |          | data  |
+---------          ---------          ---------
+    |                 ^                   ^
+    |                 |                   |
+    v                 |                   |
+[--------------------------------------------------------------------]
+| {delete id: 123}     event message queue                           |
+[--------------------------------------------------------------------]
+       ^
+       |
+   [delete id=123]
 
 
 
