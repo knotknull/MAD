@@ -209,6 +209,144 @@ service communication patterns
 
 NOTE: REST latency at each layer of api / facade
 
+## Messaging between services:
+     - Async capabilities
+
+
+ -----------
+|  service  |
+|  component|
+ -----------  \         -------------
+               \  --->  |  service   |
+               /        |  component |
+              /         -------------
+ -----------
+|  service  |
+|  component|
+ -----------
+
+
+## Messaging between services:
+     - request / reply
+developertoarchitect.com > lessons  > #1
+
+ -----------   req    -------------
+|           |  --->  |             |
+|  service  |  <---  |  service    |
+|  component|  resp  |  component  |
+ -----------          -------------
+(messaging: MQ)
+
+
+## Messaging between services:
+     - broadcast
+
+
+                       -----------
+                    > |  service  |
+                   /  |  component|
+  -------------   /    -----------
+  |  service   | /
+  |  component | \
+  -------------   \
+                   \    -----------
+                    >  |  service  |
+                       |  component|
+                        -----------
+
+
+## Messaging between services:
+supervisor / event consumer
+     - events
+
+
+
+ ------------            -------------
+|             |         |             |
+|  supervisor |  --->   |  event      |
+|             |         |  consumer   |
+ -------------           -------------
+        |
+        |
+        -----------------> [event channel]
+
+        - monitor queue depth
+        - determine consumers needed (depth / 2)
+        - apply max threshold (eg. 20 consumers)
+        - add or remove consumers as needed
+
+
+
+## Messaging between services:
+  remote procedure call (gRPC)
+  (grpc.io)
+
+
+ ------------                               -------------
+|             |  HTTP/2 w/ protocol buffer |             |
+|  client     |  ------------------->      |   server    |
+|             |  <------------------       |             |
+ -------------                              -------------
+           (gRPC stub)
+
+
+
+
+
+## Messaging between services:
+  service orchestration pattern
+    - microservice orchestrator
+
+## Messaging between services:
+  service aggregation
+
+
+## Messaging between services:
+  service gateway
+      - microservice gateway
+
+
+## Messaging between services:
+Service mesh
+
+
+
+    client request            client request
+           v                        v
+-------------------------------------------------------
+|   api (mesh) controller                             |
+-------------------------------------------------------
+           ---------                  ---------
+ -------  | service |       -------  | service |
+|sidecar| |component|      |sidecar| |component|
+ -------   ---------        -------   ---------
+
+  - inter-service comm        - security
+  - circuit breaker           - logging
+  - service migration         - metrics
+  - service discovery         - analytics
+
+  - linkerd           - envoy
+  - kubernetes        - conduit (kubernetes using conduit)
+  - istio
+
+
+
+
+##################################################
+## distributed data (challenges)
+##################################################
+
+
+
+
+
+
+
+
+
+
+
 
 
 
